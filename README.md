@@ -16,7 +16,13 @@ Most smartphones come with built-in QR code scanning and generation capabilities
 - Python 3.7+
 - A modern web browser
 
-### Running the Project
+### Online Demo
+
+A live preview is available at **https://raphaelhuefner.github.io/qr/**
+
+This demonstrates how the application works when served locally. Since all processing happens in your browser and data never leaves your machine, you can safely use the GitHub Pages version for non-sensitive QR code scanning and generation. For sensitive data, we recommend running the project locally using the instructions below.
+
+### Running the Project Locally
 
 Simply run the startup script:
 
