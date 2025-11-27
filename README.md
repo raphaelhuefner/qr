@@ -24,13 +24,17 @@ This demonstrates how the application works when served locally. Since all proce
 
 ### Running the Project Locally
 
-Simply run the startup script:
+If you cloned the repository, change into the project folder and run the startup script:
 
 ```bash
 ./run.sh
 ```
 
-This will start a local HTTP server and open the application in your default browser at `http://127.0.0.1:8080/`.
+If `git` is not available on your machine (yet, because you're still setting it up 😉), you can download the latest release ZIP from
+https://github.com/raphaelhuefner/qr/releases/latest, unzip it, change into the extracted folder,
+and run `./run.sh` there.
+
+Running the script will start a local HTTP server and open the application in your default browser at `http://127.0.0.1:8080/`.
 
 Press `Enter` in the terminal to stop the server.
 
@@ -50,7 +54,7 @@ Available options:
 ## Project Structure
 
 - `run.sh` – startup script
-- `serve.py` – Python HTTP server with background thread support
+- `serve.py` – Python HTTP server and browser launcher
 - `build.sh` – script to download and prepare vendor dependencies on third-party libraries
 - `docs/` – web assets (HTML, CSS, JavaScript, minified libraries)
 
