@@ -22,7 +22,7 @@ import sys
 import argparse
 
 
-def start_server(host: str = "127.0.0.1", port: int = 8080, directory: str = "static"):
+def start_server(host: str = "127.0.0.1", port: int = 8080, directory: str = "docs"):
     """Start an HTTP server in a background daemon thread.
 
     Returns (server, thread). Call `server.shutdown()` and `server.server_close()`
@@ -58,8 +58,8 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--directory",
-        default="static",
-        help="Directory to serve (default: static)",
+        default="docs",
+        help="Directory to serve (default: docs)",
     )
     args = parser.parse_args()
 
@@ -72,7 +72,7 @@ if __name__ == "__main__":
     host = srv_addr[0]
     port = srv_addr[1]
     url = f"http://{host}:{port}/"
-    print(f"Serving directory 'static' at {url} (background thread)")
+    print(f"Serving directory '{args.directory}' at {url} (background thread)")
 
     # Open URL in default browser
     match sys.platform:

@@ -15,9 +15,9 @@ while read -r GIT_URL GIT_REF LOCAL_REPO FILES; do
 
 	git -C "$VENDOR_PREFIX/$LOCAL_REPO" checkout "$GIT_REF"
 
-	# copy minified files to static
+	# copy minified files to docs
 	for FILE in $FILES; do
-		cp "$VENDOR_PREFIX/$LOCAL_REPO/$FILE" static/
+		cp "$VENDOR_PREFIX/$LOCAL_REPO/$FILE" docs/
 	done
 done <<'EOF'
 https://github.com/picturepan2/spectre	v0.5.9	spectre	dist/spectre.min.css	dist/spectre-exp.min.css	dist/spectre-icons.min.css

@@ -33,20 +33,20 @@ Press `Enter` in the terminal to stop the server.
 You can customize the server by modifying `run.sh` or running `serve.py` directly with command-line arguments:
 
 ```bash
-python3 serve.py --port 9000 --bind 0.0.0.0 --directory static
+python3 serve.py --port 9000 --bind 0.0.0.0 --directory docs
 ```
 
 Available options:
 - `--port PORT` – port to bind to (default: 8080)
 - `--bind ADDR` – address to bind to (default: 127.0.0.1)
-- `--directory DIR` – directory to serve (default: static)
+- `--directory DIR` – directory to serve (default: docs)
 
 ## Project Structure
 
 - `run.sh` – startup script
 - `serve.py` – Python HTTP server with background thread support
 - `build.sh` – script to download and prepare vendor dependencies on third-party libraries
-- `static/` – web assets (HTML, CSS, JavaScript, minified libraries)
+- `docs/` – web assets (HTML, CSS, JavaScript, minified libraries)
 
 ## License
 
