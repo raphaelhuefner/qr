@@ -30,9 +30,7 @@ If you cloned the repository, change into the project folder and run the startup
 ./run.sh
 ```
 
-If `git` is not available on your machine (yet, because you're still setting it up 😉), you can download the latest release ZIP from
-https://github.com/raphaelhuefner/qr/releases/latest, unzip it, change into the extracted folder,
-and run `./run.sh` there.
+If `git` is not available on your machine (yet, because you're still setting it up 😉), you can download the [latest release ZIP](https://github.com/raphaelhuefner/qr/releases/latest), unzip it, change into the extracted folder, and run `./run.sh` there.
 
 Running the script will start a local HTTP server and open the application in your default browser at `http://127.0.0.1:8080/`.
 
