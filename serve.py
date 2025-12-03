@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Start a background HTTP server serving the `static` directory on 127.0.0.1:8080.
+Start a background HTTP server serving the `docs` directory on 127.0.0.1:8080.
 
 Provides `start_server()` which returns `(server, thread)` so the caller
 can continue executing Python code while the server runs in a daemon thread.
@@ -41,6 +41,26 @@ def stop_server(server: ThreadingHTTPServer):
     server.server_close()
 
 
+def open_in_browser(url: str):
+    """Open the given URL in the default web browser, if possible."""
+    match sys.platform:
+        case "win32":
+            # getattr() to avoid AttributeError on non-Windows platforms
+            startfile = getattr(os, "startfile", None)
+            if startfile is not None:
+                startfile(url)
+            else:
+                print(
+                    f"Cannot open URL automatically on this platform. Please visit {url} manually."
+                )
+        case "darwin":
+            os.system(f"open {url}")
+        case "linux":
+            os.system(f"xdg-open {url}")
+        case x:
+            print(f"Unsupported platform: {x}. Please visit {url} manually.")
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Start a background HTTP server serving a directory"
@@ -74,23 +94,7 @@ if __name__ == "__main__":
     url = f"http://{host}:{port}/"
     print(f"Serving directory '{args.directory}' at {url} (background thread)")
 
-    # Open URL in default browser
-    match sys.platform:
-        case "win32":
-            # getattr() to avoid AttributeError on non-Windows platforms
-            startfile = getattr(os, "startfile", None)
-            if startfile is not None:
-                startfile(url)
-            else:
-                print(
-                    f"Cannot open URL automatically on this platform. Please visit {url} manually."
-                )
-        case "darwin":
-            os.system(f"open {url}")
-        case "linux":
-            os.system(f"xdg-open {url}")
-        case x:
-            print(f"Unsupported platform: {x}. Please visit {url} manually.")
+    open_in_browser(url)
 
     print("Press Enter to stop the server.")
     try:
