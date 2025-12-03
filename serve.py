@@ -22,23 +22,42 @@ import sys
 import argparse
 
 
-def start_server(host: str = "127.0.0.1", port: int = 8080, directory: str = "docs"):
-    """Start an HTTP server in a background daemon thread.
+class BackgroundServer:
+    """An HTTP server running in a background daemon thread for serving files from a directory."""
 
-    Returns (server, thread). Call `server.shutdown()` and `server.server_close()`
-    to stop the server, then `thread.join()` to wait for the thread to exit.
-    """
-    handler = partial(SimpleHTTPRequestHandler, directory=directory)
-    server = ThreadingHTTPServer((host, port), handler)
-    thread = threading.Thread(target=server.serve_forever, daemon=True, name="http-server-thread")
-    thread.start()
-    return server, thread
+    def __init__(self, host: str = "127.0.0.1", port: int = 8080, directory: str = "docs"):
+        """Start an HTTP server in a background daemon thread.
 
+        Args:
+            host: Address to bind to (default: 127.0.0.1)
+            port: Port to bind to (default: 8080)
+            directory: Directory to serve (default: docs)
+        """
+        handler = partial(SimpleHTTPRequestHandler, directory=directory)
+        self.server = ThreadingHTTPServer((host, port), handler)
+        self.thread = threading.Thread(
+            target=self.server.serve_forever, daemon=True, name="http-server-thread"
+        )
+        self.thread.start()
 
-def stop_server(server: ThreadingHTTPServer):
-    """Gracefully stop the given server."""
-    server.shutdown()
-    server.server_close()
+    def stop(self):
+        """Gracefully stop the server and wait for the thread to finish."""
+        self.server.shutdown()
+        self.server.server_close()
+        self.thread.join()
+
+    @property
+    def url(self) -> str:
+        """Get the URL of the running server.
+
+        Returns the full URL (e.g., http://127.0.0.1:8080/).
+        """
+        # server.server_address may be 2-tuple (host, port) for IPv4 or
+        # 4-tuple for IPv6; pick the first two elements.
+        srv_addr = self.server.server_address
+        host = srv_addr[0]
+        port = srv_addr[1]
+        return f"http://{host}:{port}/"
 
 
 def open_in_browser(url: str):
@@ -83,15 +102,10 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    server, thread = start_server(
+    bg_server = BackgroundServer(
         host=args.bind, port=args.port, directory=args.directory
     )
-    # server.server_address may be 2-tuple (host, port) for IPv4 or
-    # 4-tuple for IPv6; pick the first two elements for printing.
-    srv_addr = server.server_address
-    host = srv_addr[0]
-    port = srv_addr[1]
-    url = f"http://{host}:{port}/"
+    url = bg_server.url
     print(f"Serving directory '{args.directory}' at {url} (background thread)")
 
     open_in_browser(url)
@@ -103,6 +117,5 @@ if __name__ == "__main__":
         pass
 
     print("Shutting down server...")
-    stop_server(server)
-    thread.join()
+    bg_server.stop()
     print("Server stopped.")
