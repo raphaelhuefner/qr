@@ -62,22 +62,21 @@ class BackgroundServer:
 
 def open_in_browser(url: str):
     """Open the given URL in the default web browser, if possible."""
-    match sys.platform:
-        case "win32":
-            # getattr() to avoid AttributeError on non-Windows platforms
-            startfile = getattr(os, "startfile", None)
-            if startfile is not None:
-                startfile(url)
-            else:
-                print(
-                    f"Cannot open URL automatically on this platform. Please visit {url} manually."
-                )
-        case "darwin":
-            os.system(f"open {url}")
-        case "linux":
-            os.system(f"xdg-open {url}")
-        case x:
-            print(f"Unsupported platform: {x}. Please visit {url} manually.")
+    if sys.platform == "win32":
+        # getattr() to avoid AttributeError on non-Windows platforms
+        startfile = getattr(os, "startfile", None)
+        if startfile is not None:
+            startfile(url)
+        else:
+            print(
+                f"Cannot open URL automatically on this platform. Please visit {url} manually."
+            )
+    elif sys.platform == "darwin":
+        os.system(f"open {url}")
+    elif sys.platform == "linux":
+        os.system(f"xdg-open {url}")
+    else:
+        print(f"Unsupported platform: {sys.platform}. Please visit {url} manually.")
 
 
 if __name__ == "__main__":
