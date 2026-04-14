@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#111827">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="QR Tools">
@@ -16,13 +17,17 @@
     <link rel="stylesheet" href="spectre.min.css">
     <link rel="stylesheet" href="spectre-exp.min.css">
     <link rel="stylesheet" href="spectre-icons.min.css">
+    <link rel="stylesheet" href="style.css">
     <style>
-        .row-1 {
-            height: 50%;
+        .scan-layout {
+            max-width: 44rem;
         }
 
-        .row-2 {
-            height: 20%;
+        #reader {
+            overflow: hidden;
+            border-radius: 1.25rem;
+            background: #f3f4f6;
+            padding: 1rem;
         }
 
         #reader video {
@@ -31,27 +36,34 @@
 
         #output {
             width: 100%;
-            height: 100%;
+            min-height: 8rem;
+            margin-top: 1rem;
         }
     </style>
 </head>
 
 <body>
-    <div class="container row-1">
-        <div class="columns col-gapless">
-            <div class="column col-3"></div>
-            <div class="column col-6" id="reader"></div>
-            <div class="column col-3"></div>
-        </div>
-    </div>
-    <div class="container row-2">
-        <div class="columns col-gapless">
-            <div class="column col-3"></div>
-            <div class="column col-6">
-                <textarea id="output"></textarea>
-            </div>
-            <div class="column col-3"></div>
-        </div>
+    <div class="app-shell">
+        <main class="app-main">
+            <section class="app-content">
+                <div class="scan-layout">
+                    <div id="reader"></div>
+                    <textarea id="output" class="form-input"></textarea>
+                </div>
+            </section>
+
+            <aside class="app-sidebar">
+                <nav class="nav-list">
+                    <a class="nav-link" href="index.html">Home</a>
+                    <a class="nav-link active" href="scan.html">Scan QR Code</a>
+                    <a class="nav-link" href="generate.html">Generate QR Code</a>
+                </nav>
+            </aside>
+        </main>
+
+        <footer class="app-footer">
+            <a href="https://github.com/raphaelhuefner/qr">Readme on GitHub</a>
+        </footer>
     </div>
 
     <script type="text/javascript">
@@ -70,10 +82,19 @@
             }
         }
 
+        const ignoreErrors = [
+            'No MultiFormat Readers were able to detect the code.',
+            'No barcode or QR code detected.',
+        ];
+
         function onScanFailure(error) {
             // handle scan failure.
             // usually better to ignore and keep scanning.
-            console.warn(`Code scan error = ${error}`);
+            const errorText = `${error}`;
+            if (ignoreErrors.includes(errorText)) {
+                return;
+            }
+            console.warn('QR Code scan error:', error);
         }
 
         function qrboxFunction(viewfinderWidth, viewfinderHeight) {

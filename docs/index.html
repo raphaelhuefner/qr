@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#111827">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="QR Tools">
@@ -15,24 +16,30 @@
     <link rel="stylesheet" href="spectre.min.css">
     <link rel="stylesheet" href="spectre-exp.min.css">
     <link rel="stylesheet" href="spectre-icons.min.css">
-    <style>
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <a href="https://github.com/raphaelhuefner/qr"><img
-        loading="lazy" decoding="async" width="149" height="149"
-        src="https://github.blog/wp-content/uploads/2008/12/forkme_left_darkblue_121621.png"
-        class="attachment-full size-full" alt="Fork me on GitHub"></a>
+    <div class="app-shell">
+        <main class="app-main">
+            <section class="app-content">
+                <h2>QR Code Scanner and Generator</h2>
+                <p>Use the menu on the right to switch between scanning QR codes and generating new ones.</p>
+            </section>
 
-    <h1 class="text-center">QR Code Scanner and Generator</h1>
-    <p class="text-center">
-        <a href="scan.html" class="btn btn-primary">Scan QR Code</a>
-        <a href="generate.html" class="btn btn-primary">Generate QR Code</a>
-    </p>
-    <p class="text-center">
-        <a href="https://github.com/raphaelhuefner/qr" class="btn btn-link">WHAT'S THIS = DOCS = README</a>
-    </p>
+            <aside class="app-sidebar">
+                <nav class="nav-list">
+                    <a class="nav-link active" href="index.html">Home</a>
+                    <a class="nav-link" href="scan.html">Scan QR Code</a>
+                    <a class="nav-link" href="generate.html">Generate QR Code</a>
+                </nav>
+            </aside>
+        </main>
+
+        <footer class="app-footer">
+            <a href="https://github.com/raphaelhuefner/qr">Readme on GitHub</a>
+        </footer>
+    </div>
     <script src="pwa.js"></script>
 </body>
 

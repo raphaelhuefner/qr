@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#111827">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="QR Tools">
@@ -16,29 +17,51 @@
     <link rel="stylesheet" href="spectre.min.css">
     <link rel="stylesheet" href="spectre-exp.min.css">
     <link rel="stylesheet" href="spectre-icons.min.css">
+    <link rel="stylesheet" href="style.css">
     <style>
+        .generator-card {
+            max-width: 34rem;
+        }
+
+        #qrcode {
+            margin-top: 1rem;
+            padding: 1rem;
+            display: inline-block;
+            background: #fafaf7;
+            border-radius: 1rem;
+        }
+
+        .app-content h2 {
+            margin-bottom: 1rem;
+        }
     </style>
 </head>
 
 <body>
-    <div class="container row-1">
-        <div class="columns">
-            <div class="column col-3"></div>
-            <div class="column col-6 form-group">
-                <input class="form-input" id="text" type="text" value="hello" />
-            </div>
-            <div class="column col-3"></div>
-        </div>
-    </div>
+    <div class="app-shell">
+        <main class="app-main">
+            <section class="app-content">
+                <div class="generator-card">
+                    <h2>Generate QR Code</h2>
+                    <div class="form-group">
+                        <input class="form-input" id="text" type="text" value="hello" />
+                    </div>
+                    <div id="qrcode"></div>
+                </div>
+            </section>
 
-    <div class="container row-2">
-        <div class="columns">
-            <div class="column col-3"></div>
-            <div class="column col-6 mt-2">
-                <div id="qrcode"></div>
-            </div>
-            <div class="column col-3"></div>
-        </div>
+            <aside class="app-sidebar">
+                <nav class="nav-list">
+                    <a class="nav-link" href="index.html">Home</a>
+                    <a class="nav-link" href="scan.html">Scan QR Code</a>
+                    <a class="nav-link active" href="generate.html">Generate QR Code</a>
+                </nav>
+            </aside>
+        </main>
+
+        <footer class="app-footer">
+            <a href="https://github.com/raphaelhuefner/qr">Readme on GitHub</a>
+        </footer>
     </div>
 
     <script type="text/javascript">
